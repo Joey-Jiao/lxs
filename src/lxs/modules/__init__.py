@@ -1,0 +1,24 @@
+from typing import Callable
+
+from lxs.modules import base, shell
+from lxs.modules.apps import docker
+from lxs.modules.dev import c, node, python
+
+MODULES: dict[str, Callable[[], None]] = {
+    "base": base.run,
+    "shell": shell.run,
+    "dev-c": c.run,
+    "dev-python": python.run,
+    "dev-node": node.run,
+    "apps-docker": docker.run,
+}
+
+
+def run_module(name: str) -> None:
+    if name not in MODULES:
+        raise ValueError(f"Unknown module: {name}")
+    MODULES[name]()
+
+
+def list_modules() -> list[str]:
+    return list(MODULES.keys())
