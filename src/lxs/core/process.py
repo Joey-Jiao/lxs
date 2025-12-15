@@ -70,6 +70,12 @@ def run_quiet(cmd: list[str], cwd: Path | None = None) -> bool:
         return False
 
 
+def run_interactive(cmd: list[str], check: bool = True) -> subprocess.CompletedProcess[str]:
+    """Run a command interactively (allows user input like passwords)."""
+    ui.info(f"Running: {' '.join(cmd)}")
+    return subprocess.run(cmd, check=check, text=True)
+
+
 def is_installed(cmd: str) -> bool:
     return shutil.which(cmd) is not None
 

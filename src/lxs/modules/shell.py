@@ -110,12 +110,15 @@ def set_default_shell() -> None:
 
     ui.step("Setting default shell to zsh")
 
-    if not distro.is_macos():
+    if distro.is_macos():
+        process.run(["chsh", "-s", zsh_path])
+    else:
         shells = open("/etc/shells").read()
         if zsh_path not in shells:
             process.run_shell(f"echo '{zsh_path}' | sudo tee -a /etc/shells")
+        user = os.environ.get("USER", "")
+        process.run(["sudo", "chsh", "-s", zsh_path, user])
 
-    process.run(["chsh", "-s", zsh_path])
     ui.ok("Default shell set to zsh (re-login required)")
 
 

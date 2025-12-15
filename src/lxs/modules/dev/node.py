@@ -18,7 +18,7 @@ def run() -> None:
         ui.info(f"NVM already installed at {config.DIR_NVM}")
         return
 
-    fs.ensure_dir(config.DIR_LOCAL)
+    fs.ensure_dir(config.DIR_NVM)
 
     ui.step("Installing NVM")
     # NVM_DIR must be set before running install.sh
